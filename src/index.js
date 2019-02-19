@@ -1,16 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import AppRouter, { history } from './routers/AppRouter';
+import configureStore from './store/configureStore';
+import { login, logout } from './actions/auth';
 import './index.css';
-import App from './components/App';
+import LoadingPage from './components/LoadingPage'
 import * as serviceWorker from './serviceWorker';
-import Firebase, { FirebaseContext} from './firebase'
+import {firebase} from './firebase/firebase';
 
-ReactDOM.render(
-	<FirebaseContext.Provider value={new Firebase()}>
-	  <App />
-	</FirebaseContext.Provider>,
-	document.getElementById('root'),
-  );
+const store = configureStore();
+
+const jsx = (
+	<Provider store={store}>
+		<AppRouter />
+	</Provider>
+)
+let hasRendered = false;
+const renderApp = () => {
+	if(!hasRendered){
+		ReactDOM.render(jsx, document.getElementById('root'))
+		hasRendered = true
+	}
+}
+
+ReactDOM.render(jsx, document.getElementById('root'))
+
+console.log(firebase)
+firebase.auth().onAuthStateChanged((user)=>{
+	if(user){
+		store.dispatch(login(user.uid));
+
+	}
+})
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
