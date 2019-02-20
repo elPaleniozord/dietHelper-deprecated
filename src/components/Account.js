@@ -1,9 +1,17 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
-const Account = () => (
+const Account = ({auth}) => (
   <div>
     <h1>Account</h1>
+    <h2>{auth}</h2>
   </div>
 );
 
-export default Account;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth.uid
+  }
+}
+
+export default connect(mapStateToProps)(Account);

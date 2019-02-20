@@ -24,13 +24,20 @@ const renderApp = () => {
 	}
 }
 
-ReactDOM.render(jsx, document.getElementById('root'))
+ReactDOM.render(<LoadingPage />, document.getElementById('root'))
 
 console.log(firebase)
 firebase.auth().onAuthStateChanged((user)=>{
 	if(user){
-		store.dispatch(login(user.uid));
-
+		store.dispatch(login(user.uid))
+		renderApp();
+		if(history.location.pathname === '/') {
+			history.push('/home')
+		}
+	} else {
+		store.dispatch(logout());
+		renderApp();
+		history.push('/');
 	}
 })
 
