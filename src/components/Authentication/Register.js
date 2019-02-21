@@ -1,11 +1,6 @@
 import React from 'react';
-
-export const Register = () => (
-  <div>
-		Register
-		<RegisterForm/>
-	</div>
-)
+import {connect} from 'react-redux';
+import {registerNewUser} from '../../actions/auth';
 
 const INITIAL_STATE = {
   username: '',
@@ -26,13 +21,14 @@ const ERROR_MSG_ACCOUNT_EXISTS = `
   on your personal account page.
 `;
 
-class RegisterForm extends React.Component {
+class Register extends React.Component {
 	constructor(props){
 		super(props);
-		this.state = {...INITIAL_STATE}
+    this.state = {...INITIAL_STATE}
 	}
 	onSubmit = event => {
-		const {username, email, passwordOne} = this.state;
+    const {username, email, passwordOne} = this.state;
+    this.props.registerNewUser(email, passwordOne)
 	}
 	onChange = event => {
 		this.setState({[event.target.name]: event.target.value})
@@ -85,4 +81,8 @@ class RegisterForm extends React.Component {
 	}
 }
 
-export default Register
+const mapDispatchToProps = (dispatch) => ({
+  registerNewUser: (email, password) => dispatch(registerNewUser(email, password))
+});
+
+export default connect(undefined, mapDispatchToProps)(Register)

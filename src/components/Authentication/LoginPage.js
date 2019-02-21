@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startLogin } from '../../actions/auth';
+import { startLogin, startGoogleLogin } from '../../actions/auth';
 import { Link } from 'react-router-dom';
 
-export const LoginPage = ({ startLogin }) => (
+export const LoginPage = ({ startLogin, startGoogleLogin }) => (
   <div className="box-layout">
     <div className="box-layout__box">
       <h1 className="box-layout__title">Diet-Helper</h1>
       <h2>Automatic Meal Plan Generator</h2>
-      <LoginForm/>
+      <LoginForm startLogin={startLogin}/>
       <button><Link to="/register">Register</Link></button>
-      <button className="button" onClick={startLogin}>Login with Google</button>
+      <button className="button" onClick={startGoogleLogin}>Login with Google</button>
     </div>
   </div>
 );
@@ -35,12 +35,19 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {...INITIAL_STATE};
+    console.log(this)
   }
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
   
+  onSubmit = event => {
+    const {email, password, error} = this.state
+    this.props.startLogin(email, password)
+    event.preventDefault();
+  }
+
   render(){
     const { email, password, error } = this.state;
     return(
@@ -66,7 +73,8 @@ class LoginForm extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  startLogin: () => dispatch(startLogin())
+  startLogin: (email, password) => dispatch(startLogin(email, password)),
+  startGoogleLogin: () => dispatch(startGoogleLogin())
 });
 
 export default connect(undefined, mapDispatchToProps)(LoginPage);
