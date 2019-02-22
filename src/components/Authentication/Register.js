@@ -11,22 +11,13 @@ const INITIAL_STATE = {
   error: null,
 };
 
-const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
-
-const ERROR_MSG_ACCOUNT_EXISTS = `
-  An account with this E-Mail address already exists.
-  Try to login with this account instead. If you think the
-  account is already used from one of the social logins, try
-  to sign in with one of them. Afterward, associate your accounts
-  on your personal account page.
-`;
-
 class Register extends React.Component {
 	constructor(props){
 		super(props);
     this.state = {...INITIAL_STATE}
 	}
 	onSubmit = event => {
+    event.preventDefault();
     const {username, email, passwordOne} = this.state;
     this.props.registerNewUser(email, passwordOne)
 	}
@@ -38,8 +29,7 @@ class Register extends React.Component {
       username,
       email,
       passwordOne,
-      passwordTwo,
-      error,
+      passwordTwo
 		} = this.state;
 
 		return (

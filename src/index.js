@@ -27,7 +27,6 @@ const renderApp = () => {
 ReactDOM.render(<LoadingPage />, document.getElementById('root'))
 
 firebase.auth().onAuthStateChanged((user)=>{
-	console.log(user)
 	if(user){
 		store.dispatch(login(user.uid))
 		renderApp();
