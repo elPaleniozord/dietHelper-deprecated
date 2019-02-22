@@ -24,8 +24,8 @@ export const startLogin = (email, password) => {
 export const registerNewUser = (email, password) => {
 	return () => {
 		return firebase.auth().createUserWithEmailAndPassword(email, password)
-			.then((account)=>{
-				console.log(account.user.uid)
+			.then(()=>{
+				console.log('user registered successfully')
 			})
 			.catch((error)=>console.log(error))
 	}	
@@ -34,8 +34,6 @@ export const registerNewUser = (email, password) => {
 export const logout = () => {
 	return ({type: 'LOGOUT'})	
 }
-	
-
 
 export const startLogout = () => {
 	return () => {

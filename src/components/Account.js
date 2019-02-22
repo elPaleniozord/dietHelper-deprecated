@@ -5,6 +5,9 @@ const Account = ({auth}) => (
   <div>
     <h1>Account</h1>
     <h2>{auth}</h2>
+    <form>
+      
+    </form>
   </div>
 );
 
