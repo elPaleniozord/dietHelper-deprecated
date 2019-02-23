@@ -8,8 +8,7 @@ for(let i=0; i<days.length; i++){
 }
 
 const Weekly = () => (
-  <div>
-    WeekPlan
+  <div className="meal-planner">
     {week}
   </div>
 )

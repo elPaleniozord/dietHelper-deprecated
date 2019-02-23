@@ -2,7 +2,7 @@ import React from 'react';
 import Weekly from './Weekly';
 
 const MealPlanner = () => (
-  <div>
+  <div className="content-container">
 		MealPlanner
 		WiP
     <Weekly/>

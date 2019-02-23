@@ -1,4 +1,5 @@
 import React from 'react';
+import Macros from './Macros'
 
 class FoodDetails extends React.Component {
   constructor(props){
@@ -24,27 +25,12 @@ class FoodDetails extends React.Component {
     }
   }
   render(){
-    Object.keys(this.state).map(i=>console.log(this.state[i]))
-    
+    const rows = Object.keys(this.state).map(i=><Macros key={i} item={this.state[i]}/>)
+
     return (
-      <div className="food-details-container">
-        <div className="food-details-labels">
-          <span>Food</span>
-          <span>kCal</span>
-          <span>Protein</span>
-          <span>Carbs</span>
-          <span>Fats</span>
+      <div className="meal-planner__details">
+          {rows}
         </div>
-        <div className="food-details-items">
-          
-        </div>
-        <div className="food-details-summary">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
     )
   }
 }
