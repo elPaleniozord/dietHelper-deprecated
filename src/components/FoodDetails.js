@@ -29,8 +29,8 @@ class FoodDetails extends React.Component {
 
     return (
       <div className="meal-planner__details">
-          {rows}
-        </div>
+        {rows}
+      </div>
     )
   }
 }
