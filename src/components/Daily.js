@@ -6,7 +6,6 @@ let meal = [];
 for(let i=0; i<meals.length; i++){
   meal.push(<Meal key={i} meal={meals[i]}/>)
 }
-console.log(meal)
 const Daily = ({day}) => (
   <div className="meal-planner__table">
     <h2>{day}</h2>
