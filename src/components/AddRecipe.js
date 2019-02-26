@@ -1,11 +1,14 @@
 import React from 'react';
+import TagInput from './TagInput';
+import { connect } from 'react-redux';
+import { addNewRecipe } from '../actions/recipes';
 
 class AddRecipe extends React.Component{
   constructor(props){
     super(props)
 
     this.state = {
-      recipe: '',
+      id: '',
       menu: '',
       kcal: '2000',
       prot: '',
@@ -16,28 +19,32 @@ class AddRecipe extends React.Component{
   }
 
   onSubmit = event => {
-
+    event.preventDefault();
+    this.props.addNewRecipe(this.state)
   }
 
   onChange = event => {
     this.setState({[event.target.name]: event.target.value})
   }
+  onSelect = event => {
+    this.setState({menu: event.target.value})
+  }
 
   render(){
     return (
-      <div>
+      <div className="content-container">
         Add New Recipe
-        <form onSubmit={this.onSubmit}>
+        <form className="recipe-form" onSubmit={this.onSubmit}>
           <input 
-            name='recipe'
-            value={this.state.recipe}
+            name='id'
+            value={this.state.id}
             onChange={this.onChange}
             type="text"
             placeholder="Recipe Name"
           />
 
           <label>Menu:</label>
-          <select>
+          <select value={this.state.menu.value} onChange={this.onSelect}>
             <option value="breakfast">Breakfast</option>
             <option value="lunch">Lunch</option>
             <option value="dinner">Dinner</option>
@@ -74,6 +81,8 @@ class AddRecipe extends React.Component{
             type="text"
             placeholder="fats/100g"
           />
+
+          Ingredients: <TagInput/>
           <button>Send</button>
         </form>
       </div>
@@ -81,4 +90,10 @@ class AddRecipe extends React.Component{
   }
 }
 
-export default AddRecipe;
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    addNewRecipe: (recipe) => dispatch(addNewRecipe(recipe))
+  })
+}
+
+export default connect(undefined, mapDispatchToProps)(AddRecipe);

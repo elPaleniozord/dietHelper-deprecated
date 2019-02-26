@@ -6,7 +6,7 @@ export const setUserData = (uid) => {
 	docRef.get().then((doc)=>{
 		doc.exists ? console.log(doc.data())
 		:
-		database.collection("users").doc(uid).set({
+		docRef.set({
 			userName: 'Palen',
 			kCal: 2000,
 			plan: 'maintenance'
