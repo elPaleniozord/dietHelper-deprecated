@@ -3,13 +3,12 @@ import React from 'react';
 class TagInput extends React.Component {
   constructor(props){
     super(props);
-
     this.state = {
       items: [],
       focused: false,
       input: ''
     }
-
+    this.getIngredients = this.props.getIngredients.bind(this)
     this.onClose = this.onClose.bind(this)
   }
   
@@ -33,6 +32,7 @@ class TagInput extends React.Component {
         items: [...state.items, value],
         input: ''
       }))
+      this.getIngredients(this.state.items, value)
     //delete on backspace
     } else if (event.keyCode === 8 && this.state.items !== 0){
       this.setState(state => ({

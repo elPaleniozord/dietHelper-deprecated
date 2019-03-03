@@ -1,8 +1,8 @@
 import React from 'react';
 
 const ShoppingList = () => (
-  <div>
-		Shopping list
+  <div className="content-container">
+		<h1>Shopping list</h1>
 		WiP
   </div>
 )

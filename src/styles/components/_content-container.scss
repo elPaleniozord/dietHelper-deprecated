@@ -1,4 +1,6 @@
 .content-container {
+  display: flex;
+  flex-direction: column;
   margin: auto;
   padding: 0 $m-size;
   max-width: 80rem;

@@ -13,3 +13,9 @@ export const setUserData = (uid) => {
 		})
 	})
 }
+
+export const startSetMealPlan = (uid) => {
+	const docRef = database.collection("users").doc(uid)
+
+	
+}

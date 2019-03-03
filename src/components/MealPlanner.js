@@ -3,8 +3,7 @@ import Weekly from './Weekly';
 
 const MealPlanner = () => (
   <div className="content-container">
-		MealPlanner
-		WiP
+		<h1>Meal Planner</h1>
     <Weekly/>
   </div>
 )

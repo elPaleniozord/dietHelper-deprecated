@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom'
 
 const Home = () => (
-  <div>
+  <div className="content-container">
     <Link to='/account'>Account Managment</Link>
     <Link to='/planner'>Meal Planner</Link>
     <Link to='/list'>Shopping List</Link>

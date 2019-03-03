@@ -1,8 +1,4 @@
-.meal-planner {
-  background-color: $grey;
-  display: grid;
 
-}
 
 // .meal-planner > * {
 //   padding: $s-size;
@@ -17,9 +13,12 @@
 // }
 
 .meal-planner__daily {
-  background-color: rgb(206, 197, 197);
   padding: $s-size;
-  border: 5px solid black;
+  border: 3px solid black;
+}
+
+.meal-planner__table > h2 {
+  cursor: pointer;
 }
 
 .meal-planner__labels {
@@ -36,7 +35,7 @@
 .meal-planner__meal {
   display: grid;
   grid-template-columns: 150px auto;
-  border: 2px solid red;
+  border: 1px solid black;
 }
 
 .meal-planner__bottom-row {

@@ -7,22 +7,25 @@ class AddRecipe extends React.Component{
   constructor(props){
     super(props)
 
+    this.ingredientsRef = React.createRef();
+
     this.state = {
       id: '',
       menu: '',
-      kcal: '2000',
+      kcal: '',
       prot: '',
       fats: '',
       carb: '',
       ingredients: []
     }
   }
-
-  onSubmit = event => {
+  getIngredients = (items, value) => {
+    this.setState({ingredients: [...items, value]})
+  }
+  onSubmit = event => {    
     event.preventDefault();
     this.props.addNewRecipe(this.state)
   }
-
   onChange = event => {
     this.setState({[event.target.name]: event.target.value})
   }
@@ -48,8 +51,8 @@ class AddRecipe extends React.Component{
             <option value="breakfast">Breakfast</option>
             <option value="lunch">Lunch</option>
             <option value="dinner">Dinner</option>
-            <option value="shake">Breakfast</option>
-            <option value="supper">Breakfast</option>
+            <option value="shake">Shake</option>
+            <option value="supper">Supper</option>
           </select>
 
           <label>Macros:</label>
@@ -82,7 +85,7 @@ class AddRecipe extends React.Component{
             placeholder="fats/100g"
           />
 
-          Ingredients: <TagInput/>
+          Ingredients: <TagInput ref={this.ingredientsRef} getIngredients={this.getIngredients}/>
           <button>Send</button>
         </form>
       </div>
