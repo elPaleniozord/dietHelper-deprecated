@@ -1,26 +1,36 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {startUpdateUser} from '../actions/users';
 
 class Account extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      username: 'Anon',
-      kcal: 0,
-      goal: ''
+      username: props.user ? props.user.username : 'Anon',
+      kcal: props.user ? props.user.kcal : 0,
+      goal: props.user ? props.user.goal : '',
+      meals: props.user ? props.user.meals : 5
     }
   }
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+  onSelect = event => {
+    this.setState({goal: event.target.value})
+  }
+
+  onSubmit = event => {
+    event.preventDefault();
+    this.props.startUpdateUser(this.state)
+  }
 
   render(){
     return (
       <div className="content-container">
         <h1>Account</h1>
         <h2>Hello, {this.state.username}</h2>
-        <form>
+        <form onSubmit={this.onSubmit}>
           <label>Username:</label>
           <input
             name="username"
@@ -40,7 +50,7 @@ class Account extends React.Component {
           />
 
           <label>Goal:</label>
-          <select>
+          <select value={this.state.goal.value} onChange={this.onSelect}>
             <option value="bulk">Bulk Up</option>
             <option value="main">Maintenance</option>
             <option value="loss">Weight Loss</option>
@@ -66,8 +76,15 @@ class Account extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth.uid
+    auth: state.auth.uid,
+    user: state.user
   }
 }
 
-export default connect(mapStateToProps)(Account);
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    startUpdateUser: (user) => dispatch(startUpdateUser(user))
+  })
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

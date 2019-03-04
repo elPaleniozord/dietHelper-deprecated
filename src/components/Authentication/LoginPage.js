@@ -4,14 +4,10 @@ import { startLogin, startGoogleLogin } from '../../actions/auth';
 import { Link } from 'react-router-dom';
 
 export const LoginPage = ({ startLogin, startGoogleLogin }) => (
-  <div className="box-layout">
-    <div className="box-layout__box">
-      <h1 className="box-layout__title">Diet-Helper</h1>
-      <h2>Automatic Meal Plan Generator</h2>
-      <LoginForm startLogin={startLogin}/>
-      <button><Link to="/register">Register</Link></button>
-      <button className="button" onClick={startGoogleLogin}>Login with Google</button>
-    </div>
+  <div className="content-container">
+    <LoginForm startLogin={startLogin}/>
+    <button><Link to="/register">Register</Link></button>
+    <button className="button" onClick={startGoogleLogin}>Login with Google</button>
   </div>
 );
 

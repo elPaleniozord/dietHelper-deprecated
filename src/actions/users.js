@@ -1,21 +1,31 @@
 import database from '../firebase/firebase'
 
-export const setUserData = (uid) => {
-	const docRef = database.collection("users").doc(uid)
+export const updateUser = (user) => ({
+	type: 'UPDATE_USERDATA',
+	user
+})
 
-	docRef.get().then((doc)=>{
-		doc.exists ? console.log(doc.data())
-		:
-		docRef.set({
-			userName: 'Palen',
-			kCal: 2000,
-			plan: 'maintenance'
-		})
-	})
+export const startUpdateUser = (user) => {
+	return (dispatch, getState) => {
+		const uid = getState().auth.uid;
+		return database.collection("users").doc(uid)
+			.get().then(doc=>{
+				if(doc.exists) {
+					database.collection("users").doc(uid).update(user)
+				} else {
+					database.collection("users").doc(uid).set({
+						username: user.username,
+						kcal: user.kcal,
+						goal: user.goal,
+						meals: user.meals
+					})
+				}
+				dispatch(updateUser(user))
+			})
+	}
 }
 
-export const startSetMealPlan = (uid) => {
+export const startSetUser = (uid) => {
 	const docRef = database.collection("users").doc(uid)
-
-	
+		
 }
