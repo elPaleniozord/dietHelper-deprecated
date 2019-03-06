@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {startUpdateUser} from '../actions/users';
+import {startUpdateUser} from '../actions/user';
 
 class Account extends React.Component {
   constructor(props){

@@ -25,7 +25,18 @@ export const startUpdateUser = (user) => {
 	}
 }
 
+export const setUser = (user) => ({
+	type: 'SET_USERDATA',
+	user
+})
+
 export const startSetUser = (uid) => {
-	const docRef = database.collection("users").doc(uid)
-		
+	return (dispatch, getState) => {
+		const uid = getState().auth.uid;
+		return database.collection("users").doc(uid)
+			.get().then((doc)=>{
+				dispatch(setUser(doc.data()))
+			})
+	}
+	
 }
