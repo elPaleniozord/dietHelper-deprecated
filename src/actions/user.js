@@ -17,7 +17,8 @@ export const startUpdateUser = (user) => {
 						username: user.username,
 						kcal: user.kcal,
 						goal: user.goal,
-						meals: user.meals
+						meals: user.meals,
+						ingredients: user.ingredients
 					})
 				}
 				dispatch(updateUser(user))

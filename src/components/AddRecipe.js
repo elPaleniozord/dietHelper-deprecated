@@ -36,7 +36,7 @@ class AddRecipe extends React.Component{
   render(){
     return (
       <div className="content-container">
-        Add New Recipe
+        <h1>Add New Recipe</h1>
         <form className="recipe-form" onSubmit={this.onSubmit}>
           <input 
             name='id'
