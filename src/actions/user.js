@@ -39,5 +39,4 @@ export const startSetUser = (uid) => {
 				dispatch(setUser(doc.data()))
 			})
 	}
-	
 }
