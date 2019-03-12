@@ -5,10 +5,12 @@ import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { login, logout } from './actions/auth';
 import { startSetUser } from './actions/user';
+import { startLoadRecipes } from './actions/recipes';
 import './styles/styles.scss';
 import LoadingPage from './components/LoadingPage'
 import * as serviceWorker from './serviceWorker';
 import {firebase} from './firebase/firebase';
+
 
 const store = configureStore();
 
@@ -31,6 +33,7 @@ firebase.auth().onAuthStateChanged((user)=>{
 	if(user){
 		store.dispatch(login(user.uid))
 		store.dispatch(startSetUser(user.uid))
+		store.dispatch(startLoadRecipes())
 		renderApp();
 		if(history.location.pathname === '/') {
 			history.push('/home')

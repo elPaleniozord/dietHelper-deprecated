@@ -1,12 +1,12 @@
 import React from 'react';
 import Weekly from './Weekly';
 import { connect } from 'react-redux';
-import {generateMealPlan} from '../actions/foods';
+//import {generateMealPlan} from '../actions/food';
 
 class MealPlanner extends React.Component {
   constructor(props){
     super(props)
-    this.generateMealPlan = props.generateMealPlan
+    //this.generateMealPlan = props.generateMealPlan
   }
 
   render(){
@@ -14,7 +14,7 @@ class MealPlanner extends React.Component {
       <div className="content-container">
         <h1>Meal Planner</h1>
         <Weekly/>
-        <button onClick={this.generateMealPlan}>Create New Meal Plan</button>
+        <button>Create New Meal Plan</button>
       </div>
     )
   }
@@ -22,7 +22,7 @@ class MealPlanner extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    generateMealPlan: () => dispatch(generateMealPlan())
+    //generateMealPlan: () => dispatch(generateMealPlan())
   })
 }
 

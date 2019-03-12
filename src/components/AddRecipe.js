@@ -1,7 +1,7 @@
 import React from 'react';
 import TagInput from './TagInput';
 import { connect } from 'react-redux';
-import { addNewRecipe } from '../actions/recipes';
+import { startAddNewRecipe } from '../actions/recipes';
 
 class AddRecipe extends React.Component{
   constructor(props){
@@ -95,7 +95,7 @@ class AddRecipe extends React.Component{
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    addNewRecipe: (recipe) => dispatch(addNewRecipe(recipe))
+    addNewRecipe: (recipe) => dispatch(startAddNewRecipe(recipe))
   })
 }
 
