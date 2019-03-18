@@ -1,13 +1,12 @@
 import React from 'react';
 import TagInput from './TagInput';
+import Variant from './Variant';
 import { connect } from 'react-redux';
 import { startAddNewRecipe } from '../actions/recipes';
 
 class AddRecipe extends React.Component{
   constructor(props){
     super(props)
-
-    this.ingredientsRef = React.createRef();
 
     this.state = {
       id: '',
@@ -16,11 +15,23 @@ class AddRecipe extends React.Component{
       prot: '',
       fats: '',
       carb: '',
+      variant: {},
       ingredients: []
     }
   }
   getIngredients = (items, value) => {
     this.setState({ingredients: [...items, value]})
+  }
+  getVariant = (item) => {
+    this.setState({variant: {
+      name: item.name,
+      macros: {
+        kcal: item.kcal,
+        prot: item.prot,
+        carb: item.carb,
+        fats: item.fats
+      }
+    }})
   }
   onSubmit = event => {    
     event.preventDefault();
@@ -84,8 +95,8 @@ class AddRecipe extends React.Component{
             type="text"
             placeholder="fats/100g"
           />
-
-          Ingredients: <TagInput ref={this.ingredientsRef} getIngredients={this.getIngredients}/>
+          Variants: <Variant getVariant={this.getVariant}/>
+          Ingredients: <TagInput getIngredients={this.getIngredients}/>
           <button>Send</button>
         </form>
       </div>

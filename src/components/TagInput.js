@@ -33,12 +33,7 @@ class TagInput extends React.Component {
         input: ''
       }))
       this.getIngredients(this.state.items, value)
-    //delete on backspace
-    } else if (event.keyCode === 8 && this.state.items !== 0){
-      this.setState(state => ({
-        items: state.items.slice(0, state.items.length-1)
-      }))
-    }    
+    }
   }
 
   render(){

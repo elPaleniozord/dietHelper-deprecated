@@ -7,8 +7,9 @@ export const addRecipe = (recipe) => ({
 
 export const startAddNewRecipe = (recipe) => {
   return (dispatch)=>{
+    const id = Object.entries(recipe.variant).length === 0 || recipe.variant.name === "" ? recipe.id : recipe.id+' ('+recipe.variant.name+')'
     const item = {
-      name: recipe.id,
+      name: id,
       menu: recipe.menu,
       macros: {
         kcal: recipe.kcal,
@@ -18,8 +19,9 @@ export const startAddNewRecipe = (recipe) => {
       },
       ingredients: recipe.ingredients
     }
-    return database.collection("recipes").doc(recipe.id).set(item).then(      
-      dispatch(startLoadRecipes())
+    return database.collection("recipes").doc(id).set(item).then(      
+      dispatch(startLoadRecipes()),
+      recipe.variant.name && dispatch(startAddVariant(recipe.id, recipe.variant))
     )
   }  
 }
@@ -46,5 +48,13 @@ export const startLoadRecipes = () => {
       })
       dispatch(loadRecipes(recipes))
     })    
+  }
+}
+
+export const startAddVariant = (id, item) => {
+  return () => {
+    const variant = {[item.name]: item.macros}
+
+    return database.collection("variants").doc(id).update(variant)
   }
 }
