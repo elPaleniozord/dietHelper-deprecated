@@ -55,6 +55,13 @@ export const startAddVariant = (id, item) => {
   return () => {
     const variant = {[item.name]: item.macros}
 
-    return database.collection("variants").doc(id).update(variant)
+    return database.collection("variants").doc(id)
+      .get().then(doc=>{
+        if(doc.exists){
+          database.collection("variants").doc(id).update(variant)
+        } else {
+          database.collection("variants").doc(id).set(variant)
+        }
+      })
   }
 }
