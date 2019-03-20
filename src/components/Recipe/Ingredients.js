@@ -1,4 +1,5 @@
 import React from 'react';
+import Autocomplete from './Autocomplete'
 
 class Ingredients extends React.Component {
   constructor(props){
@@ -41,14 +42,7 @@ class Ingredients extends React.Component {
         <div>
           {Object.entries(this.state.items).length > 0 ? ingredients : null}
         </div>        
-        
-        <input
-          name='id'
-          value={this.state.id}
-          onChange={this.onChange}
-          type='text'
-          placeholder='name'
-        />
+        <Autocomplete />
         <input 
           name='amount'
           value={this.state.amount}
