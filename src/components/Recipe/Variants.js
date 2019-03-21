@@ -17,7 +17,7 @@ class Variants extends React.Component {
 
   render(){
     return (
-      <div className="content-container">
+      <div>
         Variants (optional):
         <label>Name:</label>
         <input 

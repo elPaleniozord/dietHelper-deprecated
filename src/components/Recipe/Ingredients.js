@@ -6,9 +6,17 @@ class Ingredients extends React.Component {
     super(props)
     this.state = {
       id: '',
+      code: 0,
       amount: '',
       items: {}
     }
+  }
+
+  getItems = (item, value) => {
+    this.setState({
+      id: item,
+      code: value
+    }, ()=>console.log(this.state))
   }
 
   onChange = event => {
@@ -42,7 +50,7 @@ class Ingredients extends React.Component {
         <div>
           {Object.entries(this.state.items).length > 0 ? ingredients : null}
         </div>        
-        <Autocomplete />
+        <Autocomplete getItems={this.getItems}/>
         <input 
           name='amount'
           value={this.state.amount}

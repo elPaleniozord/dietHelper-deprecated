@@ -11,8 +11,10 @@ class Autocomplete extends React.Component {
       suggestions: [],
       showSuggestions: false,
       userInput: '',
+      itemCode: 0,
       isLoading: false
     }
+    this.getItems = this.props.getItems.bind(this)
   }
   ndbSearch(phrase){
     const url = "https://api.nal.usda.gov/ndb/search/?format=json&q="+phrase+"&ds=Standard%20Reference&max=10&api_key="+apiKey
@@ -46,8 +48,10 @@ class Autocomplete extends React.Component {
       activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
-      userInput: event.target.innerText
+      userInput: event.target.innerText,
+      itemCode: event.target.value
     })
+    this.getItems(event.target.innerText, event.target.value)
   }
 
   render(){
@@ -59,6 +63,7 @@ class Autocomplete extends React.Component {
           <ul className="suggestions">
             {this.state.suggestions.map((suggestion,index) => {
               let className
+              const item = Object.keys(suggestion)
               if(index===this.state.activeSuggestion) {
                 className="suggestion-active"
               }
@@ -67,8 +72,9 @@ class Autocomplete extends React.Component {
                   className={className}
                   key={index}
                   onClick={this.onClick}
+                  value={suggestion[item]}
                 >
-                  {Object.keys(suggestion)}
+                  {item}
                 </li>
               )
             })}
