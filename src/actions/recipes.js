@@ -17,7 +17,9 @@ export const startAddNewRecipe = (recipe) => {
         carb: recipe.carb,
         fats: recipe.fats,
       },
-      ingredients: recipe.ingredients
+      ingredients: recipe.ingredients,
+      variants: {},
+
     }
     return database.collection("recipes").doc(id).set(item).then(      
       dispatch(startLoadRecipes()),
@@ -25,6 +27,11 @@ export const startAddNewRecipe = (recipe) => {
     )
   }  
 }
+
+export const addNewVariant = (variant) => ({
+  type: 'ADD_NEW_VARIANT',
+  variant
+})
 
 export const loadRecipes = (recipes) => ({
   type: 'LOAD_RECIPES',

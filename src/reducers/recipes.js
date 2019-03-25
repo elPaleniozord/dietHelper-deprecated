@@ -1,9 +1,14 @@
-const recipesReducerDefaultState = []
+const recipesReducerDefaultState = {newRecipe:{}}
 
 export default (state = recipesReducerDefaultState, action) => {
   switch(action.type){
+    case 'ADD_NEW_RECIPE':
+      return state
+    case 'ADD_NEW_VARIANT':
+      console.log(state, action)
+      return state
     case 'LOAD_RECIPES':
-      return action.recipes;
+      return {...state, ...action.recipes};
     default:
       return state;
   }

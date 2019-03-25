@@ -16,7 +16,7 @@ class Ingredients extends React.Component {
     this.setState({
       id: item,
       code: value
-    }, ()=>console.log(this.state))
+    })
   }
 
   onChange = event => {

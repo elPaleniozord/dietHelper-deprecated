@@ -1,6 +1,4 @@
 import React from 'react';
-import TagInput from './TagInput';
-import Variant from './Variant';
 import { connect } from 'react-redux';
 import { startAddNewRecipe } from '../actions/recipes';
 import Ingredients from './Recipe/Ingredients';
@@ -13,27 +11,13 @@ class AddRecipe extends React.Component{
     this.state = {
       id: '',
       menu: 'breakfast',
-      kcal: '',
-      prot: '',
-      fats: '',
-      carb: '',
-      variant: {},
-      ingredients: []
+      variants: {},
+      ingredients: [],
+      recipe: ''
     }
   }
   getIngredients = (items, value) => {
     this.setState({ingredients: [...items, value]})
-  }
-  getVariant = (item) => {
-    this.setState({variant: {
-      name: item.name,
-      macros: {
-        kcal: item.kcal,
-        prot: item.prot,
-        carb: item.carb,
-        fats: item.fats
-      }
-    }})
   }
   onSubmit = event => {    
     event.preventDefault();
@@ -69,7 +53,7 @@ class AddRecipe extends React.Component{
         </select>
 
         <Ingredients />
-        <Variants />
+        <Variants getVariants={this.getVariants}/>
 
         <label>Recipe:</label>
         <input 
@@ -81,57 +65,6 @@ class AddRecipe extends React.Component{
         />
 
         <button>Add New Recipe</button>
-        {/* <form className="recipe-form" onSubmit={this.onSubmit}>
-          <input 
-            name='id'
-            value={this.state.id}
-            onChange={this.onChange}
-            type="text"
-            placeholder="Recipe Name"
-          />
-
-          <label>Menu:</label>
-          <select value={this.state.menu.value} onChange={this.onSelect}>
-            <option value="breakfast">Breakfast</option>
-            <option value="lunch">Lunch</option>
-            <option value="dinner">Dinner</option>
-            <option value="shake">Shake</option>
-            <option value="supper">Supper</option>
-          </select>
-
-          <label>Macros:</label>
-          <input 
-            name='kcal'
-            value={this.state.kcal}
-            onChange={this.onChange}
-            type="text"
-            placeholder="kCal/100g"
-          />
-          <input 
-            name='prot'
-            value={this.state.prot}
-            onChange={this.onChange}
-            type="text"
-            placeholder="protein/100g"
-          />
-          <input 
-            name='carb'
-            value={this.state.carb}
-            onChange={this.onChange}
-            type="text"
-            placeholder="carbs/100g"
-          />
-          <input 
-            name='fats'
-            value={this.state.fats}
-            onChange={this.onChange}
-            type="text"
-            placeholder="fats/100g"
-          />
-          Variants: <Variant getVariant={this.getVariant}/>
-          Ingredients: <TagInput getIngredients={this.getIngredients}/>
-          <button>Send</button>
-        </form> */}
       </div>
     )
   }
