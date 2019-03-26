@@ -39,17 +39,6 @@ class AddRecipe extends React.Component{
   }
 
   render(){
-    const ingredients = (
-      <ul>
-        {this.state.ingredients.map((item,i)=>(
-          
-          <li key={i}>
-            {console.log('item: ', item)}
-          </li>
-        ))}
-      </ul>
-    )
-
     const variants = (
       <ul>
         {Object.keys(this.state.variants).map((variant, i)=>(
@@ -79,7 +68,6 @@ class AddRecipe extends React.Component{
           <option value="supper">Supper</option>
         </select>
 
-        {ingredients}
         <Ingredients getIngredients={this.getIngredients}/>
 
         {variants}

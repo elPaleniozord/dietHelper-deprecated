@@ -40,14 +40,17 @@ class Ingredients extends React.Component {
   }
 
   render(){
-    const ingredients = null
+    const ingredients = Object.keys(this.state.items).map((item)=>(
+      <li>
+        {console.log(item)}
+        {item} x{this.state.items[item].amount}
+      </li>
+    ))
 
     return (
       <div>
         Ingredients:
-        <div>
-          {Object.entries(this.state.items).length > 0 ? ingredients : null}
-        </div>        
+        {ingredients}   
         <Autocomplete getItems={this.getItems}/>
         <input 
           name='amount'
