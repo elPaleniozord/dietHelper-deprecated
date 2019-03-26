@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 //import {generateMealPlan} from '../actions/food';
 
 class MealPlanner extends React.Component {
-  constructor(props){
-    super(props)
-    //this.generateMealPlan = props.generateMealPlan
-  }
+  // constructor(props){
+  //   super(props)
+  //   //this.generateMealPlan = props.generateMealPlan
+  // }
 
   render(){
     return (

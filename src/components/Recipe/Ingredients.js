@@ -10,6 +10,7 @@ class Ingredients extends React.Component {
       amount: '',
       items: {}
     }
+    this.getIngredients = this.props.getIngredients.bind(this)
   }
 
   getItems = (item, value) => {
@@ -25,9 +26,11 @@ class Ingredients extends React.Component {
 
   onAdd = event => {
     const newItem = {
-      [this.state.id]: this.state.amount 
+      [this.state.id]: {
+        code: this.state.code,
+        amount: this.state.amount} 
     }
-    this.setState({items: {...this.state.items, ...newItem}}, ()=>console.log(this.state))
+    this.setState({items: {...this.state.items, ...newItem}}, ()=>this.getIngredients(this.state.items))
   }
 
   onRemove = (event, key) => {
@@ -37,12 +40,7 @@ class Ingredients extends React.Component {
   }
 
   render(){
-    const ingredients = Object.keys(this.state.items).map((key, i) => (
-      <div key={i}>
-        {key} x{this.state.items[key]}
-        <button onClick={(event)=>{this.onRemove(event,key)}}>-</button>
-      </div>
-    ))
+    const ingredients = null
 
     return (
       <div>

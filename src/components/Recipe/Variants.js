@@ -9,33 +9,33 @@ class Variants extends React.Component {
     this.state = {
       varId: '',
       items: {},
-      variants: []
+      variants: {}
     }
+    //this.getIngredients = this.props.getIngredients.bind(this)
+    this.getVariants = this.props.getVariants.bind(this)
   }
-  addVariant = event => {    
-    const newVar = {
-      name: this.state.varId,
-      items: this.state.items
+
+  addVariant = event => {
+    const newVariant = {
+      [this.state.varId]: this.state.items
     }
-    console.log(newVar)
-    this.setState({
-      variants: [...this.state.variants, newVar]
-    }, ()=>this.props.addNewVariant(newVar))
+    this.setState({variants: {...newVariant, ...this.state.variants}}, ()=>this.getVariants(this.state.variants))
   }
   onChange = event => {
     this.setState({[event.target.name]: event.target.value})
   }
 
-  getItems = (item, value) => {
+  getItems = (ingredients) => {
     this.setState({
-      items: {[item]: value}
-    })
+      items: ingredients
+    }, ()=>console.log(this.state))
   }
 
   render(){
+
     return (
-      <div>
-        Variants (optional):
+      <div className="variant-container">
+        New Variant (optional):
         <label>Name:</label>
         <input 
           name='varId'
@@ -44,15 +44,12 @@ class Variants extends React.Component {
           type='text'
           placeholder='Variant Name'
         />
-        <Ingredients getItems={this.getItems}/>
+        <Ingredients getIngredients={this.getItems}/>
         <button onClick={this.addVariant}>Add Variant</button>
       </div>
     )
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  addNewVariant: (variants) => dispatch(addNewVariant(variants))
-})
 
-export default connect(undefined, mapDispatchToProps)(Variants)
+export default Variants

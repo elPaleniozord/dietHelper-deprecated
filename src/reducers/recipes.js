@@ -1,4 +1,8 @@
-const recipesReducerDefaultState = {newRecipe:{}}
+const recipesReducerDefaultState = {
+  newRecipe:{
+    id: 'xxx',
+    menu: 'breakfast'
+  }}
 
 export default (state = recipesReducerDefaultState, action) => {
   switch(action.type){

@@ -1,6 +1,6 @@
 import React from 'react';
 import FoodDetails from './FoodDetails';
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 
 const Meal = ({meal}) => (
   <div className="meal-planner meal-planner__meal">

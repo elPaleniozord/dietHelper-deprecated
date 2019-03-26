@@ -7,7 +7,6 @@ import Variants from './Recipe/Variants';
 class AddRecipe extends React.Component{
   constructor(props){
     super(props)
-
     this.state = {
       id: '',
       menu: 'breakfast',
@@ -16,9 +15,7 @@ class AddRecipe extends React.Component{
       recipe: ''
     }
   }
-  getIngredients = (items, value) => {
-    this.setState({ingredients: [...items, value]})
-  }
+  
   onSubmit = event => {    
     event.preventDefault();
     this.props.addNewRecipe(this.state)
@@ -29,8 +26,38 @@ class AddRecipe extends React.Component{
   onSelect = event => {
     this.setState({menu: event.target.value})
   }
+  getIngredients = (item, value) => {
+    var newIngredient = {[item]: value}
+    this.setState({
+      ingredients: [...this.state.ingredients, newIngredient]
+    })
+  }
+  getVariants = (variants) => {
+    this.setState({
+      variants: variants
+    }, ()=>console.log(this.state.variants))
+  }
 
   render(){
+    const ingredients = (
+      <ul>
+        {this.state.ingredients.map((item,i)=>(
+          
+          <li key={i}>
+            {console.log('item: ', item)}
+          </li>
+        ))}
+      </ul>
+    )
+
+    const variants = (
+      <ul>
+        {Object.keys(this.state.variants).map((variant, i)=>(
+          <li key={i}>{variant}</li>
+        ))}
+      </ul>
+    )
+
     return (
       <div className="content-container">
         <h1>Add New Recipe</h1>
@@ -52,7 +79,10 @@ class AddRecipe extends React.Component{
           <option value="supper">Supper</option>
         </select>
 
-        <Ingredients />
+        {ingredients}
+        <Ingredients getIngredients={this.getIngredients}/>
+
+        {variants}
         <Variants getVariants={this.getVariants}/>
 
         <label>Recipe:</label>
@@ -70,10 +100,16 @@ class AddRecipe extends React.Component{
   }
 }
 
+const mapStateToProps = (state) => {
+  return ({
+    newRecipe: state.recipes.newRecipe 
+  })
+}
+
 const mapDispatchToProps = (dispatch) => {
   return ({
     addNewRecipe: (recipe) => dispatch(startAddNewRecipe(recipe))
   })
 }
 
-export default connect(undefined, mapDispatchToProps)(AddRecipe);
+export default connect(mapStateToProps, mapDispatchToProps)(AddRecipe);

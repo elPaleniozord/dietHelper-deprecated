@@ -18,7 +18,7 @@ class Register extends React.Component {
 	}
 	onSubmit = event => {
     event.preventDefault();
-    const {username, email, passwordOne} = this.state;
+    const {email, passwordOne} = this.state;
     this.props.registerNewUser(email, passwordOne)
 	}
 	onChange = event => {
