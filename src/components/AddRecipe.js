@@ -69,8 +69,8 @@ class AddRecipe extends React.Component{
         </select>
 
         <Ingredients getIngredients={this.getIngredients}/>
-
-        {variants}
+        <h3>Variants:</h3>
+        {Object.keys(this.state.variants).length > 0 ? variants : null}
         <Variants getVariants={this.getVariants}/>
 
         <label>Recipe:</label>

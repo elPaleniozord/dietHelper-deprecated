@@ -44,6 +44,7 @@ class Ingredients extends React.Component {
       <li>
         {console.log(item)}
         {item} x{this.state.items[item].amount}
+        <button onClick={(event)=>{this.onRemove(event, item)}}>-</button>
       </li>
     ))
 
