@@ -74,7 +74,7 @@ class AddRecipe extends React.Component{
         <Variants getVariants={this.getVariants}/>
 
         <label>Recipe:</label>
-        <input 
+        <textarea 
           name='recipe'
           value={this.state.recipe}
           onChange={this.onChange}

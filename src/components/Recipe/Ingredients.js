@@ -4,6 +4,7 @@ import Autocomplete from './Autocomplete'
 class Ingredients extends React.Component {
   constructor(props){
     super(props)
+    this.clearInput = React.createRef();
     this.state = {
       id: '',
       code: 0,
@@ -11,11 +12,6 @@ class Ingredients extends React.Component {
       items: {}
     }
     this.getIngredients = this.props.getIngredients.bind(this)
-  }
-
-  clearInput = () => {
-    console.log('clear - ingredients')
-    this.input.clear()
   }
 
   getItems = (item, value) => {
@@ -35,8 +31,8 @@ class Ingredients extends React.Component {
         code: this.state.code,
         amount: this.state.amount} 
     }
-    this.setState({items: {...this.state.items, ...newItem}}, ()=>this.getIngredients(this.state.items))
-    
+    this.setState({items: {...this.state.items, ...newItem}, amount: ''}, ()=>this.getIngredients(this.state.items))
+    this.clearInput.current.clear()
   }
 
   onRemove = (event, key) => {
@@ -57,7 +53,7 @@ class Ingredients extends React.Component {
       <div>
         Ingredients:
         {ingredients}   
-        <Autocomplete getItems={this.getItems} ref={input => this.input = input}/>
+        <Autocomplete getItems={this.getItems} ref={this.clearInput}/>
         <input 
           name='amount'
           value={this.state.amount}
@@ -65,10 +61,7 @@ class Ingredients extends React.Component {
           type='text'
           placeholder='amount'
         />
-        <button onClick={(e) =>{
-          this.onAdd()
-          this.clearInput.bind(this)
-        }  }>+</button>
+        <button onClick={this.onAdd}>+</button>
       </div>
     )
   }
