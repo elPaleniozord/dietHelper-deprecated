@@ -14,6 +14,7 @@ class Autocomplete extends React.Component {
       itemCode: 0,
       isLoading: false
     }
+    console.log(this.input)
     this.getItems = this.props.getItems.bind(this)
   }
   ndbSearch(phrase){
@@ -33,6 +34,10 @@ class Autocomplete extends React.Component {
       this.setState({suggestions: items})
     })
     .catch(error => console.log(error))
+  }
+  clear = () => {
+    console.log('clear auto')
+    this.input.value = '';
   }
 
   onChange = event => {
@@ -86,6 +91,7 @@ class Autocomplete extends React.Component {
     return (
       <div>
         <input
+          ref={input => this.input = input }
           name='userInput'
           value={this.state.userInput}
           type='text'

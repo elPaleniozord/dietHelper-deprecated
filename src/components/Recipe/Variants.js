@@ -1,7 +1,5 @@
 import React from 'react';
 import Ingredients from './Ingredients';
-import {connect} from 'react-redux';
-import {addNewVariant} from '../../actions/recipes'
 
 class Variants extends React.Component {
   constructor(props){
@@ -19,7 +17,12 @@ class Variants extends React.Component {
     const newVariant = {
       [this.state.varId]: this.state.items
     }
-    this.setState({variants: {...newVariant, ...this.state.variants}}, ()=>this.getVariants(this.state.variants))
+    this.getVariants(newVariant)
+    this.setState({
+      varId: '',
+      items: {},  
+      variants: {}
+    })
   }
   onChange = event => {
     this.setState({[event.target.name]: event.target.value})
@@ -28,7 +31,7 @@ class Variants extends React.Component {
   getItems = (ingredients) => {
     this.setState({
       items: ingredients
-    }, ()=>console.log(this.state))
+    })
   }
 
   render(){

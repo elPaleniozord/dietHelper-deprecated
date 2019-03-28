@@ -13,6 +13,11 @@ class Ingredients extends React.Component {
     this.getIngredients = this.props.getIngredients.bind(this)
   }
 
+  clearInput = () => {
+    console.log('clear - ingredients')
+    this.input.clear()
+  }
+
   getItems = (item, value) => {
     this.setState({
       id: item,
@@ -31,6 +36,7 @@ class Ingredients extends React.Component {
         amount: this.state.amount} 
     }
     this.setState({items: {...this.state.items, ...newItem}}, ()=>this.getIngredients(this.state.items))
+    
   }
 
   onRemove = (event, key) => {
@@ -40,9 +46,8 @@ class Ingredients extends React.Component {
   }
 
   render(){
-    const ingredients = Object.keys(this.state.items).map((item)=>(
-      <li>
-        {console.log(item)}
+    const ingredients = Object.keys(this.state.items).map((item, i)=>(
+      <li key={i}>
         {item} x{this.state.items[item].amount}
         <button onClick={(event)=>{this.onRemove(event, item)}}>-</button>
       </li>
@@ -52,7 +57,7 @@ class Ingredients extends React.Component {
       <div>
         Ingredients:
         {ingredients}   
-        <Autocomplete getItems={this.getItems}/>
+        <Autocomplete getItems={this.getItems} ref={input => this.input = input}/>
         <input 
           name='amount'
           value={this.state.amount}
@@ -60,7 +65,10 @@ class Ingredients extends React.Component {
           type='text'
           placeholder='amount'
         />
-        <button onClick={this.onAdd}>+</button>
+        <button onClick={(e) =>{
+          this.onAdd()
+          this.clearInput.bind(this)
+        }  }>+</button>
       </div>
     )
   }
