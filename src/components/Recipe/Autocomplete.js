@@ -14,7 +14,6 @@ class Autocomplete extends React.Component {
       itemCode: 0,
       isLoading: false
     }
-    console.log(this)
     this.getItems = this.props.getItems.bind(this)
   }
   ndbSearch(phrase){

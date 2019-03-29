@@ -26,16 +26,15 @@ class AddRecipe extends React.Component{
   onSelect = event => {
     this.setState({menu: event.target.value})
   }
-  getIngredients = (item, value) => {
-    var newIngredient = {[item]: value}
+  getIngredients = (item) => {
     this.setState({
-      ingredients: [...this.state.ingredients, newIngredient]
+      ingredients: [...this.state.ingredients, item]
     })
   }
   getVariants = (variant) => {
     this.setState({
-      variants: variant, ...this.state.variants
-    }, ()=>console.log(this.state.variants))
+      variants: {...variant, ...this.state.variants}
+    })
   }
 
   render(){
@@ -82,7 +81,7 @@ class AddRecipe extends React.Component{
           placeholder='Enter recipe here'
         />
 
-        <button>Add New Recipe</button>
+        <button onClick={this.onSubmit}>Add New Recipe</button>
       </div>
     )
   }
