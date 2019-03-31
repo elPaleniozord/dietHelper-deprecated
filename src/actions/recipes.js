@@ -40,35 +40,37 @@ export const startAddNewRecipe = (recipe) => {
       carb = carb*100/weight
     })
   }
+
+  const processItems = (ingredients) => {
+    let items = ''
+    let amounts = []
+    ingredients.map((ingredient, i)=>{
+      const item = Object.values(ingredient)[i]
+      amounts.push(item.amount)
+      items += item.code.toString().length===4? 'ndbno=0'+item.code+'&' : 'ndbno='+item.code+'&'
+    })
+    macroLookup(items, amounts)
+  }
   
-  let items = ''
-  let amounts = []
-  recipe.ingredients.map((ingredient, i)=>{
-    const item = Object.values(ingredient)[i]
-    amounts.push(item.amount)
-    items += item.code.toString().length===4? 'ndbno=0'+item.code+'&' : 'ndbno='+item.code+'&'
-  })
-  macroLookup(items, amounts)
+  
 
   return (dispatch)=>{
-    const id = Object.entries(recipe.variant).length === 0 || recipe.variant.name === "" ? recipe.id : recipe.id+' ('+recipe.variant.name+')'
     const item = {
       [recipe.menu]: {
-        name: 
+        [recipe.id]: {
+          macros: {
+            kcal: kcal,
+            prot: prot,
+            carb: carb,
+            fats: fats
+          },
+          ingredients: processItems(recipe.ingredients),
+          variants: processItems(recipe.variants),
+          recipe: recipe.recipe
+        }
       }
-      name: recipe.id,
-      menu: recipe.menu,
-      macros: {
-        kcal: recipe.kcal,
-        prot: recipe.prot,
-        carb: recipe.carb,
-        fats: recipe.fats,
-      },
-      ingredients: recipe.ingredients,
-      variants: {},
-
     }
-    return database.collection("recipes").doc(id).set(item).then(      
+    return database.collection("recipes").doc(recipe.id).set(item).then(      
       dispatch(startLoadRecipes()),
       recipe.variant.name && dispatch(startAddVariant(recipe.id, recipe.variant))
     )
