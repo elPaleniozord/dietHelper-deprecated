@@ -33,8 +33,8 @@ class AddRecipe extends React.Component{
   }
   getVariants = (variant) => {
     this.setState({
-      variants: {...variant, ...this.state.variants}
-    })
+      variants: {...this.state.variants, ...variant}
+    },()=>console.log(this.state))
   }
 
   render(){

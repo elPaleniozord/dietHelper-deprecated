@@ -4,6 +4,7 @@ import Ingredients from './Ingredients';
 class Variants extends React.Component {
   constructor(props){
     super(props)
+    this.clearItems = React.createRef();
     this.state = {
       varId: '',
       items: {},
@@ -20,9 +21,9 @@ class Variants extends React.Component {
     this.getVariants(newVariant)
     this.setState({
       varId: '',
-      items: {},  
-      variants: {}
+      items: {}
     })
+    this.clearItems.current.clear()
   }
   onChange = event => {
     this.setState({[event.target.name]: event.target.value})
@@ -35,7 +36,6 @@ class Variants extends React.Component {
   }
 
   render(){
-
     return (
       <div className="variant-container">
         New Variant (optional):
@@ -47,7 +47,7 @@ class Variants extends React.Component {
           type='text'
           placeholder='Variant Name'
         />
-        <Ingredients getIngredients={this.getItems}/>
+        <Ingredients getIngredients={this.getItems} ref={this.clearItems}/>
         <button onClick={this.addVariant}>Add Variant</button>
       </div>
     )

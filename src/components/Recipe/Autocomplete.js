@@ -91,7 +91,7 @@ class Autocomplete extends React.Component {
     return (
       <div>
         <input
-          ref={input => this.input = input }
+          autoComplete='off'
           name='userInput'
           value={this.state.userInput}
           type='text'

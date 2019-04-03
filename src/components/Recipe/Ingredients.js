@@ -13,6 +13,9 @@ class Ingredients extends React.Component {
     }
     this.getIngredients = this.props.getIngredients.bind(this)
   }
+  clear = () => {
+    this.setState({items: {}})
+  }
 
   getItems = (item, value) => {
     this.setState({

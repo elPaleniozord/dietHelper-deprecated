@@ -8,14 +8,14 @@ export const addRecipe = (recipe) => ({
 export const startAddNewRecipe = (recipe) => {
   console.log(recipe)
   const apiKey = process.env.REACT_APP_NDB_API_KEY;
-  let kcal = 0, 
+  
+  //call ndb for macros
+  const macroLookup = (ids, amounts) => {
+    let kcal = 0, 
       prot = 0, 
       carb = 0, 
       fats = 0,
       weight = 0;
-  
-  //call ndb for macros
-  const macroLookup = (ids, amounts) => {
     const uri = 'https://api.nal.usda.gov/ndb/V2/reports?' +ids+ 'type=f&format=json&api_key=' +apiKey
 
     fetch(uri).then(response =>{
@@ -34,42 +34,44 @@ export const startAddNewRecipe = (recipe) => {
         weight += amounts[i]
       })
       //calculate macros per 100g
-      kcal = kcal*100/weight
-      prot = prot*100/weight
-      fats = fats*100/weight
-      carb = carb*100/weight
+      const macros = {
+        kcal: kcal*100/weight,
+        prot: prot*100/weight,
+        fats: fats*100/weight,
+        carb: carb*100/weight
+      }
+      console.log(macros)
+      return macros
     })
   }
 
   const processItems = (ingredients) => {
+    console.log(ingredients)
     let items = ''
     let amounts = []
+
     ingredients.map((ingredient, i)=>{
       const item = Object.values(ingredient)[i]
       amounts.push(item.amount)
       items += item.code.toString().length===4? 'ndbno=0'+item.code+'&' : 'ndbno='+item.code+'&'
-    })
-    macroLookup(items, amounts)
+    })     
+    return macroLookup(items, amounts)
   }
   
-  
-
   return (dispatch)=>{
     const item = {
       [recipe.menu]: {
         [recipe.id]: {
-          macros: {
-            kcal: kcal,
-            prot: prot,
-            carb: carb,
-            fats: fats
-          },
-          ingredients: processItems(recipe.ingredients),
-          variants: processItems(recipe.variants),
+          macros: processItems(recipe.ingredients),
+          ingredients: recipe.ingredients,
+          variants: Object.values(recipe.variants).map((variant)=>{
+            variant.macros = processItems([variant])
+          }),
           recipe: recipe.recipe
         }
       }
     }
+    console.log(item)
     return database.collection("recipes").doc(recipe.id).set(item).then(      
       dispatch(startLoadRecipes()),
       recipe.variant.name && dispatch(startAddVariant(recipe.id, recipe.variant))
