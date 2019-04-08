@@ -6,7 +6,6 @@ export const addRecipe = (recipe) => ({
 })
 
 export const startAddNewRecipe = (recipe) => {
-  console.log(recipe)
   const apiKey = process.env.REACT_APP_NDB_API_KEY;
   
   //call ndb for macros
@@ -18,7 +17,7 @@ export const startAddNewRecipe = (recipe) => {
       weight = 0;
     const uri = 'https://api.nal.usda.gov/ndb/V2/reports?' +ids+ 'type=f&format=json&api_key=' +apiKey
 
-    fetch(uri).then(response =>{
+    return fetch(uri).then(response =>{
       if(response.ok){
         return response.json()
       } else {
@@ -32,7 +31,8 @@ export const startAddNewRecipe = (recipe) => {
         fats += item.food.nutrients[4].value * (amounts[i]/100)
         carb += item.food.nutrients[6].value * (amounts[i]/100)
         weight += amounts[i]
-      })
+      })    
+  
       //calculate macros per 100g
       const macros = {
         kcal: kcal*100/weight,
@@ -40,13 +40,11 @@ export const startAddNewRecipe = (recipe) => {
         fats: fats*100/weight,
         carb: carb*100/weight
       }
-      console.log(macros)
       return macros
     })
   }
 
   const processItems = (ingredients) => {
-    console.log(ingredients)
     let items = ''
     let amounts = []
 
@@ -58,24 +56,24 @@ export const startAddNewRecipe = (recipe) => {
     return macroLookup(items, amounts)
   }
   
-  return (dispatch)=>{
-    const item = {
-      [recipe.menu]: {
-        [recipe.id]: {
-          macros: processItems(recipe.ingredients),
-          ingredients: recipe.ingredients,
-          variants: Object.values(recipe.variants).map((variant)=>{
-            variant.macros = processItems([variant])
-          }),
-          recipe: recipe.recipe
-        }
+  const item = {
+    [recipe.menu]: {
+      [recipe.id]: {
+        macros: processItems(recipe.ingredients),
+        ingredients: recipe.ingredients,
+        variants: Object.values(recipe.variants).map((variant)=>{
+          return variant.macros = processItems([variant])
+        }),
+        recipe: recipe.recipe
       }
     }
-    console.log(item)
-    return database.collection("recipes").doc(recipe.id).set(item).then(      
-      dispatch(startLoadRecipes()),
-      recipe.variant.name && dispatch(startAddVariant(recipe.id, recipe.variant))
-    )
+  }
+  return (dispatch)=>{
+    console.log('dispatching: ', item)
+    
+    dispatch(addRecipe(item))
+
+    return database.collection("recipes").doc(recipe.menu).set(Object.assign({}, item))
   }  
 }
 
