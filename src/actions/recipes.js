@@ -10,6 +10,7 @@ export const startAddNewRecipe = (recipe) => {
   
   //call ndb for macros
   const macroLookup = (ids, amounts) => {
+    console.log('checking macros: ', ids)
     let kcal = 0, 
       prot = 0, 
       carb = 0, 
@@ -44,7 +45,8 @@ export const startAddNewRecipe = (recipe) => {
     })
   }
 
-  const processItems = (ingredients) => {
+  const processItems = (ingredients) =>{
+    console.log('processing items: ', ingredients)
     let items = ''
     let amounts = []
 
@@ -55,25 +57,19 @@ export const startAddNewRecipe = (recipe) => {
     })     
     return macroLookup(items, amounts)
   }
-  
-  const item = {
-    [recipe.menu]: {
+  return async (dispatch)=>{
+    let newRecipe = {
       [recipe.id]: {
-        macros: processItems(recipe.ingredients),
+        macros: await processItems(recipe.ingredients),
         ingredients: recipe.ingredients,
-        variants: Object.values(recipe.variants).map((variant)=>{
-          return variant.macros = processItems([variant])
+        variants: Object.values(recipe.variants).map(async(variant)=>{
+          variant.macros = await processItems([variant])
+          return variant
         }),
         recipe: recipe.recipe
       }
     }
-  }
-  return (dispatch)=>{
-    console.log('dispatching: ', item)
-    
-    dispatch(addRecipe(item))
-
-    return database.collection("recipes").doc(recipe.menu).set(Object.assign({}, item))
+    return database.collection("recipes").doc(recipe.menu).set(newRecipe)
   }  
 }
 
